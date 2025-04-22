@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::paginate(10);
-        return view('categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     public function create()
@@ -31,6 +31,7 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories',
             'description' => 'nullable',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'boolean'
         ]);
 
         $category = new Category($request->except('image'));
@@ -50,7 +51,7 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        return view('categories.edit', compact('category'));
+        return view('admin.categories.edit', compact('category'));
     }
 
     public function update(Request $request, Category $category)
@@ -59,6 +60,7 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories,name,' . $category->id,
             'description' => 'nullable',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'boolean'
         ]);
 
         $category->fill($request->except('image'));
